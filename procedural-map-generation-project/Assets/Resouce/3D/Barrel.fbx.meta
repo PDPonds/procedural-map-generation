@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 41a41ea2635a1554ab35a6ed5284bd45
+guid: 78fe6508441a42848ac35700d0cfeaaf
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Bark
+    second: {fileID: 2100000, guid: f3ad3ad948252fe459e8e89a03170d5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 785d27b4ad3e9c24aaaa07eece0a25b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Rock
-    second: {fileID: 2100000, guid: d5399cf1c08196c449c7126b2bd14357, type: 2}
+    second: {fileID: 2100000, guid: 785d27b4ad3e9c24aaaa07eece0a25b2, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

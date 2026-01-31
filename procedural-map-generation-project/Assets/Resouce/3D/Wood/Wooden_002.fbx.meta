@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4587b92bb11cee340ae7703541ba7057
+guid: 7967f0f6f971b3e4c8630b450bed1619
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Leaf
-    second: {fileID: 2100000, guid: a02b067c507e93c44b05263210c0e04c, type: 2}
+      name: Bark
+    second: {fileID: 2100000, guid: f3ad3ad948252fe459e8e89a03170d5f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
