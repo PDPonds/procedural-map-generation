@@ -306,6 +306,35 @@ MonoBehaviour:
   sand_Thrashold: 0.45
   grass_Prefab: {fileID: 8828365068514091573, guid: e7608bebe59c5c24aaa03b34dbf128c4, type: 3}
   sand_Prefab: {fileID: 786800117195978210, guid: a82474032b59a63409520d2944bb77ff, type: 3}
+  decorateNoiseScale: 0.1
+  decoratePrefab:
+  - prefab: {fileID: 284237385581504447, guid: 0d13858301effb14495d18951d51c011, type: 3}
+    dropRate: 30
+  - prefab: {fileID: 3819033810131032715, guid: 742ea21464e76d741a71a2286c060456, type: 3}
+    dropRate: 20
+  - prefab: {fileID: 8168662593292895871, guid: 6a5579166d540e04b8cd31682db0acd0, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 3236511872009558922, guid: 91728f545ef526a4598ef583f6c54814, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 2769389992412575496, guid: 32ddfcf42f8b65c4e81749c2e8fcd57d, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 5021467872765752652, guid: 2e8f7df18007b0b49834ad242730b930, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 8107919045047790871, guid: ee638e5a18bec93418c7ab520757d4e8, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1461624170520492504, guid: 6b031c6ad39beca43ad52c8c35746ba3, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1190621441764633052, guid: 89856f87738333b4e892f5c7161a5ce1, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 6891010171115136871, guid: 7a735040a6b8c1e4dbc510168e29a57f, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1044384750941824918, guid: e2f323d83343fdf4bad01b18fa5a9b6b, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 6617931794983091100, guid: 4bb0f2e34d9f6fb408cea68dde5c6e40, type: 3}
+    dropRate: 3
+  - prefab: {fileID: 6152682227295469994, guid: 376bbeb4ce33d354bb51359d656a04a5, type: 3}
+    dropRate: 2
+  decorate_density: 0.5
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +564,7 @@ Transform:
   m_GameObject: {fileID: 1914775768}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 64, y: 1, z: 64}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -564,7 +593,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e55276cfbf6b19044a05578c4dd1ff8d, type: 2}
+  - {fileID: 2100000, guid: 5bc940e5eb781d9419aee7d0720e9cc0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
