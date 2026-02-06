@@ -59,7 +59,8 @@ public class MapGeneration : MonoBehaviour
             for (int x = 0; x < mapSize; x++)
             {
                 float noiseValue = Mathf.PerlinNoise(x * noiseMap_Scale + xOffset, y * noiseMap_Scale + yOffset);
-                noiseMap[x, y] = noiseValue - falloffMap[x, y];
+                float value = noiseValue - falloffMap[x, y];
+                noiseMap[x, y] = value;
             }
         }
 
@@ -69,6 +70,7 @@ public class MapGeneration : MonoBehaviour
             {
                 bool isWater = noiseMap[x, y] <= water_Thrashold;
                 grid[x, y] = new Cell(isWater);
+                grid[x, y].noiseValue = noiseMap[x, y];
             }
         }
     }
@@ -79,10 +81,11 @@ public class MapGeneration : MonoBehaviour
         {
             for (int x = 0; x < mapSize; x++)
             {
-                Vector3 cellPos = new Vector3(x, 0, y);
                 Cell cell = grid[x, y];
                 if (!cell.isWater)
                 {
+                    int yPosInt = Mathf.FloorToInt((cell.noiseValue - water_Thrashold) * 10);
+                    Vector3 cellPos = new Vector3(x, yPosInt, y);
                     GameObject prefab = SelectMapVisualPrefab(noiseMap[x, y]);
                     GameObject go = Instantiate(prefab, cellPos, Quaternion.identity);
                     go.transform.SetParent(transform, true);
@@ -119,7 +122,8 @@ public class MapGeneration : MonoBehaviour
                         GameObject prefab = GetPrefabFormDecorate();
                         if (prefab != null)
                         {
-                            Vector3 pos = new Vector3(x, 0, y);
+                            int yPosInt = Mathf.FloorToInt((cell.noiseValue - water_Thrashold) * 10);
+                            Vector3 pos = new Vector3(x, yPosInt, y);
                             GameObject go = Instantiate(prefab, pos, Quaternion.identity);
                             go.transform.SetParent(transform, true);
                             go.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360f), 0);
@@ -158,7 +162,7 @@ public class MapGeneration : MonoBehaviour
         {
             chanceSum += decoratePrefab[i].dropRate;
         }
-        
+
         float rand = UnityEngine.Random.Range(0, chanceSum);
         float runningRate = 0;
         for (int i = 0; i < decoratePrefab.Length; i++)
@@ -185,6 +189,9 @@ public class Decorate
 public class Cell
 {
     public bool isWater;
+
+    public float noiseValue;
+
     public Cell(bool isWater)
     {
         this.isWater = isWater;
