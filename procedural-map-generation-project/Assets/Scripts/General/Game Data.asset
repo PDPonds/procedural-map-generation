@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5a840094ad2104babf8d322b8ab3d6, type: 3}
+  m_Name: Game Data
+  m_EditorClassIdentifier: 
+  player_Prefab: {fileID: 7932617150099934569, guid: 13e3e80a362a90349be5c3507cbd5f3b, type: 3}
+  cameraHolder_Prefab: {fileID: 4663640120042896256, guid: f009aadc288b0534796a069ee350fa99, type: 3}
+  mouseVisual_Prefab: {fileID: 3250252451799020215, guid: e255e80593027b949a5a5c55c29c2250, type: 3}
+  mouseLayerMark:
+    serializedVersion: 2
+    m_Bits: 80

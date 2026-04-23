@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6020535024504545036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3353333105156398464}
+  - component: {fileID: 8661937093375462801}
+  m_Layer: 0
+  m_Name: MapGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3353333105156398464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020535024504545036}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8661937093375462801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020535024504545036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d52517a98bb5e04e984bbf46a78c40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapSize: 64
+  noiseMap_Scale: 0.1
+  water_Thrashold: 0.4
+  sand_Thrashold: 0.45
+  grass_Prefab: {fileID: 8828365068514091573, guid: e7608bebe59c5c24aaa03b34dbf128c4, type: 3}
+  sand_Prefab: {fileID: 786800117195978210, guid: a82474032b59a63409520d2944bb77ff, type: 3}
+  decorateNoiseScale: 0.1
+  decoratePrefab:
+  - prefab: {fileID: 284237385581504447, guid: 0d13858301effb14495d18951d51c011, type: 3}
+    dropRate: 30
+  - prefab: {fileID: 3819033810131032715, guid: 742ea21464e76d741a71a2286c060456, type: 3}
+    dropRate: 20
+  - prefab: {fileID: 8168662593292895871, guid: 6a5579166d540e04b8cd31682db0acd0, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 3236511872009558922, guid: 91728f545ef526a4598ef583f6c54814, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 2769389992412575496, guid: 32ddfcf42f8b65c4e81749c2e8fcd57d, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 5021467872765752652, guid: 2e8f7df18007b0b49834ad242730b930, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 8107919045047790871, guid: ee638e5a18bec93418c7ab520757d4e8, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1461624170520492504, guid: 6b031c6ad39beca43ad52c8c35746ba3, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1190621441764633052, guid: 89856f87738333b4e892f5c7161a5ce1, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 6891010171115136871, guid: 7a735040a6b8c1e4dbc510168e29a57f, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 1044384750941824918, guid: e2f323d83343fdf4bad01b18fa5a9b6b, type: 3}
+    dropRate: 5
+  - prefab: {fileID: 6617931794983091100, guid: 4bb0f2e34d9f6fb408cea68dde5c6e40, type: 3}
+    dropRate: 3
+  - prefab: {fileID: 6152682227295469994, guid: 376bbeb4ce33d354bb51359d656a04a5, type: 3}
+    dropRate: 2
+  decorate_density: 0.5

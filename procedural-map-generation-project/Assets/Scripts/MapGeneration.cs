@@ -27,11 +27,24 @@ public class MapGeneration : MonoBehaviour
         GenerateMap();
     }
 
-    void GenerateMap()
+    public void GenerateMap()
     {
+        ClearMap();
         GenerateCell();
         GenerateMapVisual();
         GenerateDecoration();
+    }
+
+    void ClearMap()
+    {
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform cell = transform.GetChild(i);
+                Destroy(cell.gameObject);
+            }
+        }
     }
 
     void GenerateCell()
@@ -51,23 +64,11 @@ public class MapGeneration : MonoBehaviour
                 float value = Mathf.Sqrt((xv * xv) + (yv * yv));
                 float v = Mathf.Min(value, 1);
                 falloffMap[x, y] = Mathf.Pow(v, 3f) / (Mathf.Pow(v, 3f) + Mathf.Pow(2.2f - 2.2f * v, 3f));
-            }
-        }
 
-        for (int y = 0; y < mapSize; y++)
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
                 float noiseValue = Mathf.PerlinNoise(x * noiseMap_Scale + xOffset, y * noiseMap_Scale + yOffset);
-                float value = noiseValue - falloffMap[x, y];
-                noiseMap[x, y] = value;
-            }
-        }
+                float noisefallOff = noiseValue - falloffMap[x, y];
+                noiseMap[x, y] = noisefallOff;
 
-        for (int y = 0; y < mapSize; y++)
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
                 bool isWater = noiseMap[x, y] <= water_Thrashold;
                 grid[x, y] = new Cell(isWater);
                 grid[x, y].noiseValue = noiseMap[x, y];
