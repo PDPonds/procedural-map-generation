@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
-using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MapGeneration : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] float water_Thrashold;
     [Range(0f, 1f)]
     [SerializeField] float sand_Thrashold;
-    [SerializeField] GameObject grass_Prefab;
-    [SerializeField] GameObject sand_Prefab;
+    [SerializeField] Material grass_Mat;
+    [SerializeField] Material sand_Mat;
     [Header("----- Decorate -----")]
     [SerializeField] float decorateNoiseScale;
     [SerializeField] Decorate[] decoratePrefab;
@@ -83,21 +84,169 @@ public class MapGeneration : MonoBehaviour
 
     void GenerateMapVisual()
     {
+        Mesh sandMesh = new Mesh();
+        List<Vector3> sandVertices = new List<Vector3>();
+        List<int> sandTriangles = new List<int>();
+
+        Mesh grassMesh = new Mesh();
+        List<Vector3> grassVertices = new List<Vector3>();
+        List<int> grassTriangles = new List<int>();
+
+        Mesh edgeMesh = new Mesh();
+        List<Vector3> edgeVertices = new List<Vector3>();
+        List<int> edgeTriangles = new List<int>();
+
         for (int y = 0; y < mapSize; y++)
         {
             for (int x = 0; x < mapSize; x++)
             {
                 Cell cell = grid[x, y];
+                int yPosInt = Mathf.FloorToInt((cell.noiseValue - water_Thrashold) * 10);
+                Vector3 cellPos = new Vector3(x, yPosInt, y);
                 if (!cell.isWater)
                 {
-                    int yPosInt = Mathf.FloorToInt((cell.noiseValue - water_Thrashold) * 10);
-                    Vector3 cellPos = new Vector3(x, yPosInt, y);
-                    GameObject prefab = SelectMapVisualPrefab(noiseMap[x, y]);
-                    GameObject go = Instantiate(prefab, cellPos, Quaternion.identity);
-                    go.transform.SetParent(transform, true);
+                    if (noiseMap[x, y] <= sand_Thrashold)
+                    {
+                        Vector3 a = cellPos + new Vector3(-0.5f, 0, 0.5f);
+                        Vector3 b = cellPos + new Vector3(0.5f, 0, 0.5f);
+                        Vector3 c = cellPos + new Vector3(-0.5f, 0, -0.5f);
+                        Vector3 d = cellPos + new Vector3(0.5f, 0, -0.5f);
+                        Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                        for (int k = 0; k < 6; k++)
+                        {
+                            sandVertices.Add(v[k]);
+                            sandTriangles.Add(sandTriangles.Count);
+                        }
+                    }
+                    else
+                    {
+                        Vector3 a = cellPos + new Vector3(-0.5f, 0, 0.5f);
+                        Vector3 b = cellPos + new Vector3(0.5f, 0, 0.5f);
+                        Vector3 c = cellPos + new Vector3(-0.5f, 0, -0.5f);
+                        Vector3 d = cellPos + new Vector3(0.5f, 0, -0.5f);
+                        Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                        for (int k = 0; k < 6; k++)
+                        {
+                            grassVertices.Add(v[k]);
+                            grassTriangles.Add(grassTriangles.Count);
+                        }
+                    }
+
+                    if (x > 0)
+                    {
+                        Cell left = grid[x - 1, y];
+                        int leftYPosInt = Mathf.FloorToInt((left.noiseValue - water_Thrashold) * 10);
+                        if (left.isWater || leftYPosInt < yPosInt)
+                        {
+                            Vector3 a = cellPos + new Vector3(-0.5f, 0, 0.5f);
+                            Vector3 b = cellPos + new Vector3(-0.5f, 0, -0.5f);
+                            Vector3 c = cellPos + new Vector3(-0.5f, -10, 0.5f);
+                            Vector3 d = cellPos + new Vector3(-0.5f, -10, -0.5f);
+                            Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                            for (int k = 0; k < 6; k++)
+                            {
+                                edgeVertices.Add(v[k]);
+                                edgeTriangles.Add(edgeTriangles.Count);
+                            }
+                        }
+                    }
+
+                    if (x < mapSize - 1)
+                    {
+                        Cell right = grid[x + 1, y];
+                        int rightYPosInt = Mathf.FloorToInt((right.noiseValue - water_Thrashold) * 10);
+                        if (right.isWater || rightYPosInt < yPosInt)
+                        {
+                            Vector3 a = cellPos + new Vector3(0.5f, 0, 0.5f);
+                            Vector3 b = cellPos + new Vector3(0.5f, 0, -0.5f);
+                            Vector3 c = cellPos + new Vector3(0.5f, -10, 0.5f);
+                            Vector3 d = cellPos + new Vector3(0.5f, -10, -0.5f);
+                            Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                            for (int k = 0; k < 6; k++)
+                            {
+                                edgeVertices.Add(v[k]);
+                                edgeTriangles.Add(edgeTriangles.Count);
+                            }
+                        }
+                    }
+
+                    if (y > 0)
+                    {
+                        Cell down = grid[x, y - 1];
+                        int downYPosInt = Mathf.FloorToInt((down.noiseValue - water_Thrashold) * 10);
+                        if (down.isWater || downYPosInt < yPosInt)
+                        {
+                            Vector3 a = cellPos + new Vector3(-0.5f, 0, -0.5f);
+                            Vector3 b = cellPos + new Vector3(0.5f, 0, -0.5f);
+                            Vector3 c = cellPos + new Vector3(-0.5f, -10, -0.5f);
+                            Vector3 d = cellPos + new Vector3(0.5f, -10, -0.5f);
+                            Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                            for (int k = 0; k < 6; k++)
+                            {
+                                edgeVertices.Add(v[k]);
+                                edgeTriangles.Add(edgeTriangles.Count);
+                            }
+                        }
+                    }
+
+                    if (y < mapSize - 1)
+                    {
+                        Cell up = grid[x, y + 1];
+                        int upYPosInt = Mathf.FloorToInt((up.noiseValue - water_Thrashold) * 10);
+                        if (up.isWater || upYPosInt < yPosInt)
+                        {
+                            Vector3 a = cellPos + new Vector3(-0.5f, 0, 0.5f);
+                            Vector3 b = cellPos + new Vector3(0.5f, 0, 0.5f);
+                            Vector3 c = cellPos + new Vector3(-0.5f, -10, 0.5f);
+                            Vector3 d = cellPos + new Vector3(0.5f, -10, 0.5f);
+                            Vector3[] v = new Vector3[] { a, b, c, c, b, d };
+                            for (int k = 0; k < 6; k++)
+                            {
+                                edgeVertices.Add(v[k]);
+                                edgeTriangles.Add(edgeTriangles.Count);
+                            }
+                        }
+                    }
+
                 }
             }
         }
+
+        sandMesh.vertices = sandVertices.ToArray();
+        sandMesh.triangles = sandTriangles.ToArray();
+        sandMesh.RecalculateNormals();
+
+        grassMesh.vertices = grassVertices.ToArray();
+        grassMesh.triangles = grassTriangles.ToArray();
+        grassMesh.RecalculateNormals();
+
+        edgeMesh.vertices = edgeVertices.ToArray();
+        edgeMesh.triangles = edgeTriangles.ToArray();
+        edgeMesh.RecalculateNormals();
+
+        GameObject sand = new GameObject("Sand");
+        sand.transform.parent = transform;
+        MeshFilter sandMeshFilter = sand.AddComponent<MeshFilter>();
+        sandMeshFilter.mesh = sandMesh;
+        MeshRenderer sandMeshRen = sand.AddComponent<MeshRenderer>();
+        sandMeshRen.sharedMaterial = sand_Mat;
+        sand.layer = 6;
+
+        GameObject grass = new GameObject("Grass");
+        grass.transform.parent = transform;
+        MeshFilter grassMeshFilter = grass.AddComponent<MeshFilter>();
+        grassMeshFilter.mesh = grassMesh;
+        MeshRenderer grassMeshRenderer = grass.AddComponent<MeshRenderer>();
+        grassMeshRenderer.sharedMaterial = grass_Mat;
+        grass.layer = 6;
+
+        GameObject edge = new GameObject("Edge");
+        edge.transform.parent = transform;
+        MeshFilter edgeMeshFilter = edge.AddComponent<MeshFilter>();
+        edgeMeshFilter.mesh = edgeMesh;
+        MeshRenderer edgeRen = edge.AddComponent<MeshRenderer>();
+        edgeRen.sharedMaterial = sand_Mat;
+        edge.layer = 6;
     }
 
     void GenerateDecoration()
@@ -140,25 +289,6 @@ public class MapGeneration : MonoBehaviour
             }
         }
 
-    }
-
-    GameObject SelectMapVisualPrefab(float value)
-    {
-        if (value < water_Thrashold)
-        {
-            return null;
-        }
-        else
-        {
-            if (value > water_Thrashold && value <= sand_Thrashold)
-            {
-                return sand_Prefab;
-            }
-            else
-            {
-                return grass_Prefab;
-            }
-        }
     }
 
     GameObject GetPrefabFormDecorate()

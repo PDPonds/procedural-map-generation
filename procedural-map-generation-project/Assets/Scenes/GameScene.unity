@@ -695,6 +695,14 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 8661937093375462801, guid: a38c7de9aefc85d4caecfedeaa336ff1, type: 3}
+      propertyPath: sand_Mat
+      value: 
+      objectReference: {fileID: 2100000, guid: 66e7aed425ecadf4681bc4cc3a5c5a2f, type: 2}
+    - target: {fileID: 8661937093375462801, guid: a38c7de9aefc85d4caecfedeaa336ff1, type: 3}
+      propertyPath: grass_Mat
+      value: 
+      objectReference: {fileID: 2100000, guid: 3e309d7c854fb1046babe492ebca6be2, type: 2}
+    - target: {fileID: 8661937093375462801, guid: a38c7de9aefc85d4caecfedeaa336ff1, type: 3}
       propertyPath: sandMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 66e7aed425ecadf4681bc4cc3a5c5a2f, type: 2}
