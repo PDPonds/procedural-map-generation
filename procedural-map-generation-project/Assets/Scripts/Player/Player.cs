@@ -102,6 +102,11 @@ public class Player : MonoBehaviour
         return this.slot == slot;
     }
 
+    public PlayerSelectSlot GetPlayerSelectSlot()
+    {
+        return this.slot;
+    }
+
     void UpdateSlot()
     {
         switch (slot)

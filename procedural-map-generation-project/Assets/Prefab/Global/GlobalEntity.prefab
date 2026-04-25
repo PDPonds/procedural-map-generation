@@ -57,3 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a86038c480367c4e980b1b652b12968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: f3072e6232d1d7242b865bc25f12ff5d, type: 2}
+  player: {fileID: 0}
+  mousePosInput: {x: 0, y: 0}
+  moveInput: {x: 0, y: 0}
+  ship: {fileID: 0}

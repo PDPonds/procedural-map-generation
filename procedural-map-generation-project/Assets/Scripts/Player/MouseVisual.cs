@@ -5,14 +5,14 @@ public class MouseVisual : MonoBehaviour
 {
     Transform currentVisual;
 
-    public void SetupPressVisual(Player owner)
+    public void SetupPressVisual()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
             if (child.TryGetComponent<PressTrigger>(out var pressTrigger))
             {
-                pressTrigger.Setup(owner);
+                pressTrigger.Setup();
             }
         }
     }

@@ -1,9 +1,12 @@
 using System;
+using Unity.AI.Navigation;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class MapGeneration : MonoBehaviour
 {
+    NavMeshSurface navSurface;
+
     Cell[,] grid;
     float[,] noiseMap;
     [Header("----- Map -----")]
@@ -24,6 +27,7 @@ public class MapGeneration : MonoBehaviour
 
     private void Start()
     {
+        navSurface = GetComponent<NavMeshSurface>();
         GenerateMap();
     }
 
@@ -33,6 +37,7 @@ public class MapGeneration : MonoBehaviour
         GenerateCell();
         GenerateMapVisual();
         GenerateDecoration();
+        navSurface.BuildNavMesh();
     }
 
     void ClearMap()

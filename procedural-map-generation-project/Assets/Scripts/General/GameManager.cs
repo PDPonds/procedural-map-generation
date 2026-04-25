@@ -1,3 +1,4 @@
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public enum Faction
@@ -14,23 +15,27 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public Vector2 mousePosInput;
     [HideInInspector] public Vector2 moveInput;
 
+    [HideInInspector] public Ship ship;
+
     int currentSelectSlot = 1;
 
     private void Awake()
     {
-        SpawningPlayer();
+        SpawningPlayer(new Vector3(32, 0, 32), new Vector3(32, 0, 32), Vector3.zero);
     }
 
-    void SpawningPlayer()
+    void SpawningPlayer(Vector3 playerPos, Vector3 shipPos, Vector3 shipDir)
     {
         GameObject playerObj = Instantiate(gameData.player_Prefab.gameObject, new Vector3(32, 0, 32), Quaternion.identity);
         GameObject camHolderObj = Instantiate(gameData.cameraHolder_Prefab.gameObject, Vector3.zero, Quaternion.identity);
         GameObject mouseVisualObj = Instantiate(gameData.mouseVisual_Prefab.gameObject, Vector3.zero, Quaternion.identity);
+        GameObject shipObj = Instantiate(gameData.ship_Prefab.gameObject, shipPos, Quaternion.Euler(shipDir));
+        ship = shipObj.GetComponent<Ship>();
         Player player = playerObj.GetComponent<Player>();
         this.player = player;
         MouseVisual mouseVisual = mouseVisualObj.GetComponent<MouseVisual>();
         player.SetupOnSpawning(mouseVisual);
-        mouseVisual.SetupPressVisual(player);
+        mouseVisual.SetupPressVisual();
         CameraHolder cameraHolder = camHolderObj.GetComponent<CameraHolder>();
         cameraHolder.SetTarget(playerObj.transform);
         SelectHotkeySlot(1);
@@ -77,6 +82,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    GameObject GetPressObject(PlayerSelectSlot slot)
+    {
+        if (slot == PlayerSelectSlot.Fence) { return gameData.fencePrefab.gameObject; }
+        else if (slot == PlayerSelectSlot.Cannon) { return gameData.cannonPrefab.gameObject; }
+        else if (slot == PlayerSelectSlot.Barrel) { return gameData.barrelPrefab.gameObject; }
+        else if (slot == PlayerSelectSlot.Thorn) { return gameData.thornPrefab.gameObject; }
+        else if (slot == PlayerSelectSlot.Flag) { return gameData.flagPrefab.gameObject; }
+
+        return null;
+    }
+
     public void UseSlot()
     {
         if (player != null)
@@ -103,7 +119,11 @@ public class GameManager : Singleton<GameManager>
             {
                 if (player.CanPressObj())
                 {
-                    
+                    PlayerSelectSlot slot = player.GetPlayerSelectSlot();
+                    GameObject prefab = GetPressObject(slot);
+                    GetMouseData(out Vector3 hitPoint, out Vector3 dirToMouse);
+                    GameObject obj = Instantiate(prefab, hitPoint, Quaternion.Euler(dirToMouse));
+
                 }
             }
         }

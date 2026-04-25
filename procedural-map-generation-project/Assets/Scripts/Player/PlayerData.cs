@@ -19,7 +19,5 @@ public class PlayerData : ScriptableObject
     public float rangeAttackDelay = 1f;
     public float rangeAttackBulletSpeed = 50f;
     public float rangeAttackBulletTime = 1f;
-    [Header("----- Press Obj -----")]
-    public Material canPress;
-    public Material noPress;
+
 }

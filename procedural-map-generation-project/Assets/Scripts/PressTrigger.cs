@@ -5,14 +5,12 @@ public class PressTrigger : MonoBehaviour
     [SerializeField] Vector3 colliderSize;
     [SerializeField] Vector3 colliderOffset;
 
-    Player player;
     MeshRenderer meshRen;
 
     int colliderCount = 0;
 
-    public void Setup(Player player)
+    public void Setup()
     {
-        this.player = player;
         meshRen = GetComponent<MeshRenderer>();
     }
 
@@ -20,14 +18,8 @@ public class PressTrigger : MonoBehaviour
     {
         Collider[] cols = Physics.OverlapBox(transform.position + colliderOffset, colliderSize / 2);
         colliderCount = cols.Length;
-        if (cols.Length > 0)
-        {
-            meshRen.material = player.playerData.noPress;
-        }
-        else
-        {
-            meshRen.material = player.playerData.canPress;
-        }
+        if (cols.Length > 0){ meshRen.material = GameManager.Instance.gameData.noPress; }
+        else { meshRen.material = GameManager.Instance.gameData.canPress; }
     }
 
     private void OnDrawGizmos()

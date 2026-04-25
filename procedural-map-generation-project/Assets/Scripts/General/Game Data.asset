@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5a840094ad2104babf8d322b8ab3d6, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
+  ship_Prefab: {fileID: 4427493077307856131, guid: 10f4b2cd36853a34a8f69765034440c7, type: 3}
   player_Prefab: {fileID: 7932617150099934569, guid: 13e3e80a362a90349be5c3507cbd5f3b, type: 3}
   cameraHolder_Prefab: {fileID: 4663640120042896256, guid: f009aadc288b0534796a069ee350fa99, type: 3}
   mouseVisual_Prefab: {fileID: 3250252451799020215, guid: e255e80593027b949a5a5c55c29c2250, type: 3}
   mouseLayerMark:
     serializedVersion: 2
     m_Bits: 80
+  canPress: {fileID: 2100000, guid: eaed6608d8624f24da3e43ea3861332a, type: 2}
+  noPress: {fileID: 2100000, guid: a2ba0e8d15883e34e9a51e24f52c08aa, type: 2}
+  fencePrefab: {fileID: 8727464484752822341, guid: 65b5c74d7c9e96f469b1ebf8eee44d7e, type: 3}
+  cannonPrefab: {fileID: 7942436374879609918, guid: 0478dee36e499c04a96c9c1ad2ab4b79, type: 3}
+  barrelPrefab: {fileID: 1327285977078437855, guid: 4bb0f2e34d9f6fb408cea68dde5c6e40, type: 3}
+  thornPrefab: {fileID: 5474487418373575247, guid: b9cdc6db9cf28e645bb45124dc96eeb5, type: 3}
+  flagPrefab: {fileID: 6078341315753761884, guid: eddf3d38376b8144bb8d62110be2272e, type: 3}
