@@ -13,9 +13,9 @@ TagManager:
   - UI
   - Ground
   - PlayerObject
-  - 
-  - 
-  - 
+  - Enemy
+  - PlayerAttackBlock
+  - Grass
   - 
   - 
   - 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -6,7 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class MapGeneration : MonoBehaviour
 {
-    NavMeshSurface navSurface;
+    [SerializeField] NavMeshSurface navSurface;
 
     Cell[,] grid;
     float[,] noiseMap;
@@ -28,8 +29,17 @@ public class MapGeneration : MonoBehaviour
 
     private void Start()
     {
-        navSurface = GetComponent<NavMeshSurface>();
+        StartCoroutine(TestGenerateMapWithNav());
+    }
+
+    IEnumerator TestGenerateMapWithNav()
+    {
+        Debug.Log("Generate Nav");
+        navSurface.BuildNavMesh();
+        yield return new WaitForSeconds(5);
         GenerateMap();
+        Debug.Log("Generate Map Visual");
+        navSurface.UpdateNavMesh(navSurface.navMeshData);
     }
 
     public void GenerateMap()
@@ -38,7 +48,6 @@ public class MapGeneration : MonoBehaviour
         GenerateCell();
         GenerateMapVisual();
         GenerateDecoration();
-        navSurface.BuildNavMesh();
     }
 
     void ClearMap()
@@ -230,6 +239,8 @@ public class MapGeneration : MonoBehaviour
         sandMeshFilter.mesh = sandMesh;
         MeshRenderer sandMeshRen = sand.AddComponent<MeshRenderer>();
         sandMeshRen.sharedMaterial = sand_Mat;
+        MeshCollider sandCol = sand.AddComponent<MeshCollider>();
+        sandCol.sharedMesh = sandMesh;
         sand.layer = 6;
 
         GameObject grass = new GameObject("Grass");
@@ -238,6 +249,8 @@ public class MapGeneration : MonoBehaviour
         grassMeshFilter.mesh = grassMesh;
         MeshRenderer grassMeshRenderer = grass.AddComponent<MeshRenderer>();
         grassMeshRenderer.sharedMaterial = grass_Mat;
+        MeshCollider grassCol = grass.AddComponent<MeshCollider>();
+        grassCol.sharedMesh = grassMesh;
         grass.layer = 6;
 
         GameObject edge = new GameObject("Edge");
@@ -246,6 +259,8 @@ public class MapGeneration : MonoBehaviour
         edgeMeshFilter.mesh = edgeMesh;
         MeshRenderer edgeRen = edge.AddComponent<MeshRenderer>();
         edgeRen.sharedMaterial = sand_Mat;
+        MeshCollider edgeCol = edge.AddComponent<MeshCollider>();
+        edgeCol.sharedMesh = edgeMesh;
         edge.layer = 6;
     }
 

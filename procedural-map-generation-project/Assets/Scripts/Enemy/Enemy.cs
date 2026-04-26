@@ -16,6 +16,14 @@ public class Enemy : IDamageable
 
     public override int curHP { get; set; }
     public override int maxHP { get; set; }
+    public override Faction faction { get; set; }
+
+    private void Awake()
+    {
+        faction = Faction.Enemy;
+        curHP = startHP;
+        maxHP = startHP;
+    }
 
     float curIdleTime;
 

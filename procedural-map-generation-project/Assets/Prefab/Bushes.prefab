@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6620891389992325882}
-  m_Layer: 0
+  - component: {fileID: 7173292125353093927}
+  m_Layer: 10
   m_Name: Bushes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 4115979662032377062}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7173292125353093927
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819033810131032715}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &4509331160371917581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,6 +105,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a534316109ffa3248a2cf0ccd4c7fe1b, type: 3}
       propertyPath: m_Name
       value: Bushes
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a534316109ffa3248a2cf0ccd4c7fe1b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a534316109ffa3248a2cf0ccd4c7fe1b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
