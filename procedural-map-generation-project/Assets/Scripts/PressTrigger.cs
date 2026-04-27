@@ -18,7 +18,7 @@ public class PressTrigger : MonoBehaviour
     {
         Collider[] cols = Physics.OverlapBox(transform.position + colliderOffset, colliderSize / 2);
         colliderCount = cols.Length;
-        if (cols.Length > 0){ meshRen.material = GameManager.Instance.gameData.noPress; }
+        if (cols.Length > 0) { meshRen.material = GameManager.Instance.gameData.noPress; }
         else { meshRen.material = GameManager.Instance.gameData.canPress; }
     }
 

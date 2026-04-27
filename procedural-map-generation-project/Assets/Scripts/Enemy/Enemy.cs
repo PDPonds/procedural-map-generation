@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,10 +10,12 @@ public enum EnemyState
 public class Enemy : IDamageable
 {
     [SerializeField] LayerMask targetMask;
-    [SerializeField] EnemyState state;
+    EnemyState state;
     NavMeshAgent nav;
+    Transform target;
+    [SerializeField] GameObject attackCollider;
 
-    [SerializeField] Transform target;
+    float curDelayAttack;
 
     public override int curHP { get; set; }
     public override int maxHP { get; set; }
@@ -63,9 +66,18 @@ public class Enemy : IDamageable
 
                 break;
             case EnemyState.Attack:
-
+                StartCoroutine(Attack());
                 break;
         }
+    }
+
+    IEnumerator Attack()
+    {
+        attackCollider.SetActive(true);
+        yield return new WaitForSeconds(0.25f);
+        attackCollider.SetActive(false);
+        curDelayAttack = 2f;
+        SwitchState(EnemyState.Chase);
     }
 
     void UpdateState()
@@ -88,12 +100,22 @@ public class Enemy : IDamageable
 
                 if (target != null)
                 {
-                    nav.SetDestination(target.position);
 
                     float dis = Vector3.Distance(transform.position, target.position);
-                    if (dis < 0.5f)
+                    if (dis < 0.25f)
                     {
-                        SwitchState(EnemyState.Attack);
+                        if (curDelayAttack == 0)
+                        {
+                            SwitchState(EnemyState.Attack);
+                        }
+                        else
+                        {
+                            nav.SetDestination(target.position);
+                        }
+                    }
+                    else
+                    {
+                        nav.SetDestination(target.position);
                     }
                 }
 
@@ -122,6 +144,16 @@ public class Enemy : IDamageable
     private void Update()
     {
         UpdateState();
+
+        if (curDelayAttack > 0)
+        {
+            curDelayAttack -= Time.deltaTime;
+            if (curDelayAttack <= 0)
+            {
+                curDelayAttack = 0;
+            }
+        }
+
     }
 
     public override void Death()

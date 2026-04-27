@@ -24,12 +24,13 @@ public class Bullet : MonoBehaviour
         switch (faction)
         {
             case Faction.Player:
-                Destroy(gameObject);
                 break;
             case Faction.Enemy:
-                Destroy(gameObject);
                 break;
         }
+
+        Destroy(gameObject);
+
     }
 
 }

@@ -122,8 +122,8 @@ public class GameManager : Singleton<GameManager>
                     PlayerSelectSlot slot = player.GetPlayerSelectSlot();
                     GameObject prefab = GetPressObject(slot);
                     GetMouseData(out Vector3 hitPoint, out Vector3 dirToMouse);
-                    GameObject obj = Instantiate(prefab, hitPoint, Quaternion.Euler(dirToMouse));
-
+                    float angle = Mathf.Atan2(dirToMouse.x, dirToMouse.z) * Mathf.Rad2Deg;
+                    GameObject obj = Instantiate(prefab, hitPoint, Quaternion.Euler(new Vector3(0, angle, 0)));
                 }
             }
         }

@@ -19,8 +19,15 @@ public class MouseVisual : MonoBehaviour
 
     void Update()
     {
-        GameManager.Instance.GetMouseData(out Vector3 hitPoint, out Vector3 hitDirection);
+        GameManager.Instance.GetMouseData(out Vector3 hitPoint, out Vector3 dirToMouse);
         transform.position = hitPoint;
+        LookAt(dirToMouse);
+    }
+
+    public void LookAt(Vector3 dir)
+    {
+        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
     public void SwitchMouseVisual(PlayerSelectSlot slot)
