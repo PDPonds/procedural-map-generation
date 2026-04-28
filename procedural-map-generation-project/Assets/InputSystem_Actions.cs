@@ -190,6 +190,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotationTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa03d2b4-01ed-4012-8a52-0a8ab430514e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""4e1333d3-de07-4780-b479-747347a440e4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -434,6 +452,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b99ccfb3-53bc-4df1-adf8-cea6538bfd46"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotationTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da12752a-636d-4034-9ba9-01e323d9952c"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -520,6 +560,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_MouseScollingUp = m_Player.FindAction("MouseScollingUp", throwIfNotFound: true);
         m_Player_UseSlot = m_Player.FindAction("UseSlot", throwIfNotFound: true);
         m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
+        m_Player_RotationTrigger = m_Player.FindAction("RotationTrigger", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -614,6 +656,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MouseScollingUp;
     private readonly InputAction m_Player_UseSlot;
     private readonly InputAction m_Player_MousePos;
+    private readonly InputAction m_Player_RotationTrigger;
+    private readonly InputAction m_Player_MouseDelta;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -669,6 +713,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/MousePos".
         /// </summary>
         public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/RotationTrigger".
+        /// </summary>
+        public InputAction @RotationTrigger => m_Wrapper.m_Player_RotationTrigger;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -728,6 +780,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
+            @RotationTrigger.started += instance.OnRotationTrigger;
+            @RotationTrigger.performed += instance.OnRotationTrigger;
+            @RotationTrigger.canceled += instance.OnRotationTrigger;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -772,6 +830,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
+            @RotationTrigger.started -= instance.OnRotationTrigger;
+            @RotationTrigger.performed -= instance.OnRotationTrigger;
+            @RotationTrigger.canceled -= instance.OnRotationTrigger;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -1039,6 +1103,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMousePos(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RotationTrigger" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRotationTrigger(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

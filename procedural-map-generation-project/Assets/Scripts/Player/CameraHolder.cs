@@ -5,6 +5,18 @@ public class CameraHolder : MonoBehaviour
     Transform target;
     [SerializeField] float smoothSpeed = 0.125f;
 
+    private void Update()
+    {
+        if (GameManager.Instance.canRatateCam)
+        {
+            float roationX = GameManager.Instance.mouseDelta.normalized.x;
+            if (roationX > 0)
+            {
+
+            }
+        }
+    }
+
     private void LateUpdate()
     {
         FollowTarget();

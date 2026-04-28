@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PressTrigger : MonoBehaviour
 {
-    [SerializeField] Vector3 colliderSize;
-    [SerializeField] Vector3 colliderOffset;
-
     MeshRenderer meshRen;
 
     int colliderCount = 0;
@@ -12,25 +9,28 @@ public class PressTrigger : MonoBehaviour
     public void Setup()
     {
         meshRen = GetComponent<MeshRenderer>();
+        meshRen.sharedMaterial = GameManager.Instance.gameData.canPress;
+        colliderCount = 0;
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        Collider[] cols = Physics.OverlapBox(transform.position + colliderOffset, colliderSize / 2);
-        colliderCount = cols.Length;
-        if (cols.Length > 0) { meshRen.material = GameManager.Instance.gameData.noPress; }
-        else { meshRen.material = GameManager.Instance.gameData.canPress; }
+        colliderCount++;
+        meshRen.material = GameManager.Instance.gameData.noPress;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerExit(Collider other)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + colliderOffset, colliderSize);
+        colliderCount--;
+        if (colliderCount <= 0)
+        {
+            meshRen.material = GameManager.Instance.gameData.canPress;
+        }
     }
 
     public bool NoColliding()
     {
-        return colliderCount == 0;
+        return colliderCount <= 0;
     }
 
 }

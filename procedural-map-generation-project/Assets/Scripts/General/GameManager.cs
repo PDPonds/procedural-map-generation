@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public Player player;
     [HideInInspector] public Vector2 mousePosInput;
     [HideInInspector] public Vector2 moveInput;
+    [HideInInspector] public Vector2 mouseDelta;
+    [HideInInspector] public bool canRatateCam;
 
     [HideInInspector] public Ship ship;
 

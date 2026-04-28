@@ -42,6 +42,11 @@ public class MouseVisual : MonoBehaviour
         Transform visual = transform.GetChild(visualID);
         currentVisual = visual;
         visual.gameObject.SetActive(true);
+        if(visual.TryGetComponent<PressTrigger>(out var pressTrigger))
+        {
+            pressTrigger.Setup();
+        }
+        
     }
 
     public bool CanPressObject()

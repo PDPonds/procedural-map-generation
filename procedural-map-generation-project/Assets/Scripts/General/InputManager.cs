@@ -28,6 +28,9 @@ public class InputManager : MonoBehaviour
             };
             action.Player.UseSlot.performed += i => gm.UseSlot();
             action.Player.MousePos.performed += i => gm.mousePosInput = i.ReadValue<Vector2>();
+            action.Player.MouseDelta.performed += i => gm.mouseDelta = i.ReadValue<Vector2>();
+            action.Player.RotationTrigger.performed += i => gm.canRatateCam = true;
+            action.Player.RotationTrigger.canceled += i => gm.canRatateCam = false;
         }
         action.Enable();
     }
