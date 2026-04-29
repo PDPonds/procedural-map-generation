@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public Ship ship;
 
+    //public int currentDay = 1;
+
     int currentSelectSlot = 1;
 
     private void Awake()

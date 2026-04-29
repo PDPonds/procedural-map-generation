@@ -10,10 +10,7 @@ public class CameraHolder : MonoBehaviour
         if (GameManager.Instance.canRatateCam)
         {
             float roationX = GameManager.Instance.mouseDelta.normalized.x;
-            if (roationX > 0)
-            {
-
-            }
+            transform.Rotate(0, roationX * 100 * Time.deltaTime, 0);
         }
     }
 

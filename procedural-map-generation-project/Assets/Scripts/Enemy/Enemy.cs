@@ -21,6 +21,8 @@ public class Enemy : IDamageable
     public override int maxHP { get; set; }
     public override Faction faction { get; set; }
 
+    public int curDamage;
+
     private void Awake()
     {
         faction = Faction.Enemy;
@@ -76,7 +78,8 @@ public class Enemy : IDamageable
         attackCollider.SetActive(true);
         yield return new WaitForSeconds(0.25f);
         attackCollider.SetActive(false);
-        curDelayAttack = 2f;
+        curDelayAttack = 3f;
+        yield return new WaitForSeconds(2f);
         SwitchState(EnemyState.Chase);
     }
 
@@ -118,6 +121,13 @@ public class Enemy : IDamageable
                         nav.SetDestination(target.position);
                     }
                 }
+                else
+                {
+                    if (GameManager.Instance.ship != null)
+                    {
+                        target = GameManager.Instance.ship.transform;
+                    }
+                }
 
                 Collider[] cols = Physics.OverlapSphere(transform.position, 2f, targetMask);
                 if (cols.Length > 0)
@@ -131,7 +141,7 @@ public class Enemy : IDamageable
 
                 break;
             case EnemyState.Attack:
-                nav.SetDestination(transform.position);
+                nav.velocity = Vector3.zero;
                 break;
         }
     }
