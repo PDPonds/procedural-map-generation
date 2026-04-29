@@ -13,6 +13,11 @@ public class Cannon : IDamageable
         maxHP = startHP;
     }
 
+    public override void TakeDamageEffect()
+    {
+
+    }
+
 
     public override void Death()
     {

@@ -6,7 +6,7 @@ public class EnemyAttackTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            if (damageable.faction != Faction.Enemy)
+            if (damageable.faction == Faction.Player)
             {
                 Enemy enemy = transform.parent.GetComponent<Enemy>();
                 damageable.TakeDamage(enemy.curDamage);

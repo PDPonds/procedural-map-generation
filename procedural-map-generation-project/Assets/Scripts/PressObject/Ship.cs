@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Ship : MonoBehaviour
+public class Ship : IDamageable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override Faction faction { get; set; }
+    public override int curHP { get; set; }
+    public override int maxHP { get; set; }
+
+    private void Awake()
+    {
+        faction = Faction.Player;
+        curHP = startHP;
+        maxHP = startHP;
+    }
+
+    public override void TakeDamageEffect()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Death()
     {
-        
+        Destroy(gameObject);
     }
+
 }

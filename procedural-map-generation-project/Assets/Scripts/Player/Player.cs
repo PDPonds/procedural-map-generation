@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     [SerializeField] float curRangeDelay = 0;
     [SerializeField] Transform rangeAttackSpawnPosition;
 
+    [HideInInspector] public int curDamage;
+
     public void SetupOnSpawning(MouseVisual mouseVisual)
     {
         controller = GetComponent<CharacterController>();
@@ -169,7 +171,7 @@ public class Player : MonoBehaviour
     {
         GameObject bulletObj = Instantiate(playerData.rangeAttackPrefab.gameObject, rangeAttackSpawnPosition.position, Quaternion.identity);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
-        bullet.Setup(Faction.Player, transform.forward, playerData.rangeAttackBulletSpeed, playerData.rangeAttackBulletTime);
+        bullet.Setup(Faction.Player, transform.forward, playerData.rangeAttackBulletSpeed, playerData.rangeAttackBulletTime, curDamage);
         curRangeDelay = playerData.rangeAttackDelay;
     }
 

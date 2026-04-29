@@ -4,13 +4,15 @@ public class Bullet : MonoBehaviour
 {
     Vector3 dir;
     float speed;
+    int damage;
     Faction faction = Faction.None;
 
-    public void Setup(Faction faction, Vector3 dir, float speed, float duration)
+    public void Setup(Faction faction, Vector3 dir, float speed, float duration, int damage)
     {
         this.dir = dir;
         this.speed = speed;
         this.faction = faction;
+        this.damage = damage;
         Destroy(gameObject, duration);
     }
 
@@ -21,12 +23,24 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (faction)
+        if (other.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            case Faction.Player:
-                break;
-            case Faction.Enemy:
-                break;
+            switch (faction)
+            {
+                case Faction.Player:
+                    if (faction == Faction.Enemy)
+                    {
+                        damageable.TakeDamage(damage);
+                    }
+                    break;
+                case Faction.Enemy:
+                    if (faction == Faction.Player)
+                    {
+                        damageable.TakeDamage(damage);
+                    }
+                    break;
+            }
+
         }
 
         Destroy(gameObject);

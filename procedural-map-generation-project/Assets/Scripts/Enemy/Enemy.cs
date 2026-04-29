@@ -7,15 +7,34 @@ public enum EnemyState
     Idle, Chase, Attack
 }
 
+public enum EnemyType
+{
+    Close, Range
+}
+
 public class Enemy : IDamageable
 {
     [SerializeField] LayerMask targetMask;
     EnemyState state;
     NavMeshAgent nav;
     Transform target;
+    [Header("----- Type -----")]
+    [SerializeField] EnemyType type;
+    [Header("----- Close -----")]
     [SerializeField] GameObject attackCollider;
+    [Header("----- Range -----")]
+    [SerializeField] Transform bulletSpawnpoint;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float rangeAttackBulletTime;
+    [SerializeField] float rangeAttackBulletSpeed;
+
+    [SerializeField] float attackDelay;
+    [SerializeField] float attackDuration;
+    [SerializeField] float changeTargetLength;
+    [SerializeField] float attackRange;
 
     float curDelayAttack;
+    float curAttackDuration;
 
     public override int curHP { get; set; }
     public override int maxHP { get; set; }
@@ -68,19 +87,16 @@ public class Enemy : IDamageable
 
                 break;
             case EnemyState.Attack:
-                StartCoroutine(Attack());
+                curAttackDuration = attackDuration;
+                if (type == EnemyType.Close) { attackCollider.SetActive(true); }
+                else
+                {
+                    GameObject bulletObj = Instantiate(bulletPrefab.gameObject, bulletSpawnpoint.position, Quaternion.identity);
+                    Bullet bullet = bulletObj.GetComponent<Bullet>();
+                    bullet.Setup(Faction.Enemy, transform.forward, rangeAttackBulletSpeed, rangeAttackBulletTime, curDamage);
+                }
                 break;
         }
-    }
-
-    IEnumerator Attack()
-    {
-        attackCollider.SetActive(true);
-        yield return new WaitForSeconds(0.25f);
-        attackCollider.SetActive(false);
-        curDelayAttack = 3f;
-        yield return new WaitForSeconds(2f);
-        SwitchState(EnemyState.Chase);
     }
 
     void UpdateState()
@@ -105,15 +121,12 @@ public class Enemy : IDamageable
                 {
 
                     float dis = Vector3.Distance(transform.position, target.position);
-                    if (dis < 0.25f)
+                    if (dis < attackRange)
                     {
-                        if (curDelayAttack == 0)
+                        nav.velocity = Vector3.zero;
+                        if (curDelayAttack <= 0)
                         {
                             SwitchState(EnemyState.Attack);
-                        }
-                        else
-                        {
-                            nav.SetDestination(target.position);
                         }
                     }
                     else
@@ -129,7 +142,7 @@ public class Enemy : IDamageable
                     }
                 }
 
-                Collider[] cols = Physics.OverlapSphere(transform.position, 2f, targetMask);
+                Collider[] cols = Physics.OverlapSphere(transform.position, changeTargetLength, targetMask);
                 if (cols.Length > 0)
                 {
                     Collider col = cols[0];
@@ -142,6 +155,21 @@ public class Enemy : IDamageable
                 break;
             case EnemyState.Attack:
                 nav.velocity = Vector3.zero;
+                if (curAttackDuration > 0)
+                {
+                    curAttackDuration -= Time.deltaTime;
+
+                    if (curAttackDuration < attackDuration - attackDelay)
+                    {
+                        if (type == EnemyType.Close) { attackCollider.SetActive(false); }
+                        curDelayAttack = attackDelay;
+                    }
+
+                    if (curAttackDuration <= 0)
+                    {
+                        SwitchState(EnemyState.Chase);
+                    }
+                }
                 break;
         }
     }
@@ -166,6 +194,11 @@ public class Enemy : IDamageable
 
     }
 
+    public override void TakeDamageEffect()
+    {
+
+    }
+
     public override void Death()
     {
         Destroy(gameObject);
@@ -174,7 +207,9 @@ public class Enemy : IDamageable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 2f);
+        Gizmos.DrawWireSphere(transform.position, changeTargetLength);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }

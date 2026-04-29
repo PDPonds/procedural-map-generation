@@ -13,6 +13,11 @@ public class Fence : IDamageable
         maxHP = startHP;
     }
 
+    public override void TakeDamageEffect()
+    {
+
+    }
+
     public override void Death()
     {
         Destroy(gameObject);

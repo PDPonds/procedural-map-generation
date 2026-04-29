@@ -15,11 +15,13 @@ public abstract class IDamageable : MonoBehaviour
     public void TakeDamage(int damage)
     {
         curHP -= damage;
+        TakeDamageEffect();
         if (curHP <= 0)
         {
             Death();
         }
     }
 
+    public abstract void TakeDamageEffect();
 
 }
