@@ -6,7 +6,10 @@ public class PlayerAttackTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            damageable.TakeDamage(GameManager.Instance.player.curDamage);
+            if (damageable.faction != Faction.Ship)
+            {
+                damageable.TakeDamage(GameManager.Instance.player.curDamage);
+            }
         }
     }
 }

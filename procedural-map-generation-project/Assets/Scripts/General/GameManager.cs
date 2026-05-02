@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum Faction
 {
-    None, Player, Enemy
+    None, Ship ,Player, Enemy
 }
 
 public class GameManager : Singleton<GameManager>

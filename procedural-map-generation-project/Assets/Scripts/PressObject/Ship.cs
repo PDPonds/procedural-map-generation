@@ -9,14 +9,14 @@ public class Ship : IDamageable
 
     private void Awake()
     {
-        faction = Faction.Player;
+        faction = Faction.Ship;
         curHP = startHP;
         maxHP = startHP;
     }
 
     public override void TakeDamageEffect()
     {
-        
+
     }
 
     public override void Death()

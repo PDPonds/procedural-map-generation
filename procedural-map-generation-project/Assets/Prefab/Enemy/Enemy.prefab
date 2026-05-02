@@ -192,7 +192,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 128
-  type: 1
+  type: 0
   attackCollider: {fileID: 646551227360039599}
   bulletSpawnpoint: {fileID: 5306499762632968396}
   bulletPrefab: {fileID: 6137278918998138010, guid: c6f1aaac6fb54ee41a978aad9f650044, type: 3}
@@ -202,6 +202,7 @@ MonoBehaviour:
   attackDuration: 2
   changeTargetLength: 9
   attackRange: 7
+  changeAttackDuration: 2
   curDamage: 0
 --- !u!1 &4749125729632981303
 GameObject:

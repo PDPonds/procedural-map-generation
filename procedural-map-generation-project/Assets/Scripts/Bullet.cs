@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
                     }
                     break;
                 case Faction.Enemy:
-                    if (faction == Faction.Player)
+                    if (faction == Faction.Player || damageable.faction == Faction.Ship)
                     {
                         damageable.TakeDamage(damage);
                     }

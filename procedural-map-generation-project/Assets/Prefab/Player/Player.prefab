@@ -700,6 +700,7 @@ MonoBehaviour:
   meleeHitbox: {fileID: 7139475113200214942}
   curRangeDelay: 0
   rangeAttackSpawnPosition: {fileID: 3963579499534924915}
+  curDamage: 0
 --- !u!114 &3388260972851310294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,7 +1428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4054300978102239685
 Transform:
   m_ObjectHideFlags: 0

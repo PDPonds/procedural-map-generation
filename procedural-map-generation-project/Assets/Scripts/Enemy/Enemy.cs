@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public enum EnemyState
 {
-    Idle, Chase, Attack
+    Idle, Chase, ChangeAttack, Attack
 }
 
 public enum EnemyType
@@ -27,13 +27,15 @@ public class Enemy : IDamageable
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float rangeAttackBulletTime;
     [SerializeField] float rangeAttackBulletSpeed;
-
+    [Header("----- Detail -----")]
     [SerializeField] float attackDelay;
     [SerializeField] float attackDuration;
     [SerializeField] float changeTargetLength;
     [SerializeField] float attackRange;
+    [SerializeField] float changeAttackDuration;
 
     float curDelayAttack;
+    float curChangeAttackDuration;
     float curAttackDuration;
 
     public override int curHP { get; set; }
@@ -86,16 +88,25 @@ public class Enemy : IDamageable
                 }
 
                 break;
+            case EnemyState.ChangeAttack:
+                curChangeAttackDuration = changeAttackDuration;
+                break;
             case EnemyState.Attack:
                 curAttackDuration = attackDuration;
-                if (type == EnemyType.Close) { attackCollider.SetActive(true); }
-                else
-                {
-                    GameObject bulletObj = Instantiate(bulletPrefab.gameObject, bulletSpawnpoint.position, Quaternion.identity);
-                    Bullet bullet = bulletObj.GetComponent<Bullet>();
-                    bullet.Setup(Faction.Enemy, transform.forward, rangeAttackBulletSpeed, rangeAttackBulletTime, curDamage);
-                }
+                Attack();
                 break;
+        }
+    }
+
+    void Attack()
+    {
+        curAttackDuration = attackDuration;
+        if (type == EnemyType.Close) { attackCollider.SetActive(true); }
+        else
+        {
+            GameObject bulletObj = Instantiate(bulletPrefab.gameObject, bulletSpawnpoint.position, Quaternion.identity);
+            Bullet bullet = bulletObj.GetComponent<Bullet>();
+            bullet.Setup(Faction.Enemy, transform.forward, rangeAttackBulletSpeed, rangeAttackBulletTime, curDamage);
         }
     }
 
@@ -126,7 +137,7 @@ public class Enemy : IDamageable
                         nav.velocity = Vector3.zero;
                         if (curDelayAttack <= 0)
                         {
-                            SwitchState(EnemyState.Attack);
+                            SwitchState(EnemyState.ChangeAttack);
                         }
                     }
                     else
@@ -153,8 +164,20 @@ public class Enemy : IDamageable
                 }
 
                 break;
+            case EnemyState.ChangeAttack:
+                nav.velocity = Vector3.zero;
+                if (curChangeAttackDuration > 0)
+                {
+                    curChangeAttackDuration -= Time.deltaTime;
+                    if (curChangeAttackDuration <= 0)
+                    {
+                        SwitchState(EnemyState.Attack);
+                    }
+                }
+                break;
             case EnemyState.Attack:
                 nav.velocity = Vector3.zero;
+
                 if (curAttackDuration > 0)
                 {
                     curAttackDuration -= Time.deltaTime;
@@ -170,6 +193,7 @@ public class Enemy : IDamageable
                         SwitchState(EnemyState.Chase);
                     }
                 }
+
                 break;
         }
     }
